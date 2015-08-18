@@ -34,8 +34,8 @@ deployment:
           - docker push sillelien/buddy-j-alpine
           - docker build -f Dockerfile-test-alpine -t sillelien/buddy-j-alpine-test:$(cat .release) .
           - docker build -f Dockerfile-test-alpine -t sillelien/buddy-j-alpine-test .
-          - docker push sillelien/buddy-j-test-alpine:$(cat .release)
-          - docker push sillelien/buddy-j-test-alpine
+          - docker push sillelien/buddy-j-alpine-test:$(cat .release)
+          - docker push sillelien/buddy-j-alpine-test
 
   development:
       branch: dev
