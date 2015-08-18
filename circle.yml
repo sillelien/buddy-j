@@ -1,0 +1,45 @@
+machine:
+  services:
+    - docker
+  environment:
+    RELEASE: 0.0.${CIRCLE_BUILD_NUM}
+
+dependencies:
+  cache_directories:
+    - "~/docker"
+
+  override:
+      - cd ~ && git clone https://github.com/sillelien/build-utils.git && chmod a+x ~/build-utils/*.sh
+      - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS 
+      - docker build -f Dockerfile-alpine -t sillelien/buddy-j-alpine:${CIRCLE_BRANCH} .
+      - docker build -f Dockerfile-test-alpine -t sillelien/buddy-j-alpine-test:${CIRCLE_BRANCH} .
+
+test:
+  override:
+      - echo "None"
+
+deployment:
+
+  staging:
+      branch: staging
+      commands:
+         - ~/build-utils/promote_from_staging.sh
+
+  production:
+      branch: master
+      commands:
+          - docker build -f Dockerfile-alpine -t sillelien/buddy-j-alpine:$(cat .release) .
+          - docker build -f Dockerfile-alpine -t sillelien/buddy-j-alpine .
+          - docker push sillelien/buddy-j-alpine:$(cat .release)
+          - docker push sillelien/buddy-j-alpine
+          - docker build -f Dockerfile-test-alpine -t sillelien/buddy-j-alpine-test:$(cat .release) .
+          - docker build -f Dockerfile-test-alpine -t sillelien/buddy-j-alpine-test .
+          - docker push sillelien/buddy-j-test-alpine:$(cat .release)
+          - docker push sillelien/buddy-j-test-alpine
+
+  development:
+      branch: dev
+      commands:
+        - docker push sillelien/buddy-j-alpine:${CIRCLE_BRANCH}
+        - docker push sillelien/buddy-j-alpine-test:${CIRCLE_BRANCH}
+
