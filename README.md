@@ -1,5 +1,5 @@
 
-# Buddy J
+# Buddy J [![Experimental](https://img.shields.io/badge/Status-Experimental_or_POC-red.svg?style=flat)](http://github.com/sillelien/buddy-j)
 -------
 
 **If you use this project please consider giving us a star on [GitHub](http://github.com/sillelien/buddy-j). Also if you can spare 30 secs of your time please let us know your priorities here https://sillelien.wufoo.com/forms/zv51vc704q9ary/  - thanks, that really helps!**
