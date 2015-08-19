@@ -19,10 +19,10 @@ RUN apk add --update wget ca-certificates dnsmasq && \
         "http://download.oracle.com/otn-pub/java/jdk/${JAVA_VERSION}u${JAVA_UPDATE}-b${JAVA_BUILD}/jdk-${JAVA_VERSION}u${JAVA_UPDATE}-linux-x64.tar.gz" && \
     tar xzf "jdk-${JAVA_VERSION}u${JAVA_UPDATE}-linux-x64.tar.gz" && \
     mkdir -p /usr/lib/jvm && \
-    mv "/build/jdk1.${JAVA_VERSION}.0_${JAVA_UPDATE}" "/deploy" && \
+    mv "/build/jdk1.${JAVA_VERSION}.0_${JAVA_UPDATE}" "/deploy/jdk" && \
     apk del wget ca-certificates && \
     rm /build/* /var/cache/apk/* && \
     echo 'hosts: files mdns4_minimal [NOTFOUND=return] dns mdns4' >> /etc/nsswitch.conf
     # about nsswitch.conf - see https://registry.hub.docker.com/u/frolvlad/alpine-oraclejdk8/dockerfile/
 
-CMD "cp -r /deploy/* /jdk"
+CMD cp -rf /deploy/jdk/* /jdk/
