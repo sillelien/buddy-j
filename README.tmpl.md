@@ -1,4 +1,4 @@
 ${HEADER}
-# Buddy J
+# Buddy J ${STATE_EXPERIMENTAL}
 ${BLURB}
 ${FOOTER}
